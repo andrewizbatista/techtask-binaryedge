@@ -4,7 +4,7 @@ const appConfig: AppConfig = {
   appName: 'BinaryEdge Tech Task',
   appWebsite: 'http://localhost',
   appThemeColor: colors.Secondary,
-  googleFonts: ['Roboto:400,700'],
+  googleFonts: ['Hind:400,700'],
   defaultLocale: {
     code: 'en',
     codeRegion: 'en_GB',

@@ -10,19 +10,19 @@ export const colors: {
   LightDarker: string;
   Error: string;
 } = {
-  Primary: '#14ce78',
-  Secondary: '#14ce78',
+  Primary: '#e64d36',
+  Secondary: '#1d3557',
   Dark: '#1e1e1e',
   Light: '#e2e2e2',
   LightDarker: '#a1a1a1',
-  Error: '#ff4400',
+  Error: '#e64d36',
 };
 
 export const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
     background: {
-      default: colors.Dark,
+      default: '#fff',
     },
     primary: {
       main: colors.Primary,
@@ -34,12 +34,33 @@ export const theme = createMuiTheme({
       main: colors.Error,
     },
     text: {
-      primary: colors.Light,
+      primary: colors.Dark,
       secondary: colors.LightDarker,
     },
   },
   typography: {
-    fontFamily: ['monospace'].join(','),
+    fontFamily: ['Hind', 'monospace'].join(','),
+    h1: {
+      fontSize: '2.5rem',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      letterSpacing: '1px',
+    },
+    h2: {
+      fontSize: '1.4rem',
+      fontWeight: 'bold',
+    },
+    h3: {
+      fontSize: '0.9rem',
+    },
+    subtitle2: {
+      fontFamily: ['monospace'].join(','),
+      fontSize: '1rem',
+    },
+    body2: {
+      fontFamily: ['monospace'].join(','),
+      fontSize: '0.8rem',
+    },
   },
   overrides: {},
   props: {},

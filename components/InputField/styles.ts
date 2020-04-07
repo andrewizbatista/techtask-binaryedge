@@ -5,7 +5,13 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 
-const styles = makeStyles(({}: Theme) => createStyles({}));
+const styles = makeStyles(({}: Theme) =>
+  createStyles({
+    wrapper: {
+      width: '100%',
+    },
+  }),
+);
 
 const useStyles = () => styles(useTheme());
 

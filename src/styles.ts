@@ -5,10 +5,15 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 
-const styles = makeStyles(({}: Theme) =>
+const styles = makeStyles(({ palette }: Theme) =>
   createStyles({
-    wrapper: {
+    loginImage: {
+      width: '100%',
       height: '100vh',
+      backgroundColor: palette.primary.main,
+      backgroundImage: 'url("img/splash-screen.jpg")',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
   }),
 );
