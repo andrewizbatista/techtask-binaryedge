@@ -1,4 +1,5 @@
 import React from 'react';
+import { GetStaticProps } from 'next';
 
 // Components
 import Grid from '@material-ui/core/Grid';
@@ -7,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 // Others
 import useGlobalStyles from 'src/styles';
 
-export const {{ pascalCase pageName }}Page = ({}: {{ pascalCase pageName }}PageProps) => {
+export const {{ pascalCase pageName }}Page = ({ pageMeta }: {{ pascalCase pageName }}PageProps) => {
   const globalClasses = useGlobalStyles();
 
   return (
@@ -26,10 +27,19 @@ export const {{ pascalCase pageName }}Page = ({}: {{ pascalCase pageName }}PageP
   );
 };
 
-{{ pascalCase pageName }}Page.getInitialProps = async (): Promise<{{ pascalCase pageName }}PageProps> => {
-  return {};
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      pageMeta: {
+        metaTitle: 'Page',
+        metaDescription: 'BinaryEdge Tech Task by @andrewizbatista',
+      },
+    },
+  };
 };
 
-export interface {{ pascalCase pageName }}PageProps {}
+export interface {{ pascalCase pageName }}PageProps {
+  pageMeta: PageMeta;
+}
 
 export default {{ pascalCase pageName }}Page;
