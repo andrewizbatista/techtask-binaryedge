@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Formik, FormikProps, FormikHelpers, Form } from 'formik';
-import { useRouter } from 'next/router';
 
 // Components
 import Grid from '@material-ui/core/Grid';
@@ -11,18 +10,16 @@ import SubmitButtons from 'components/SubmitButtons';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
-const FORM_NAME = 'LoginForm';
+const FORM_NAME = 'SearchByDomain';
 
-export const LoginForm = ({}: LoginFormProps) => {
+export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
   const classes = useStyles();
-  const router = useRouter();
 
   /**
    * Initial Values
    */
   const initialValues: FormValues = {
     email: '',
-    password: '',
   };
 
   /**
@@ -32,10 +29,9 @@ export const LoginForm = ({}: LoginFormProps) => {
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
       console.log(FORM_NAME, values);
 
+      setSearchTerm(values.email);
       setSubmitting(false);
       resetForm();
-
-      router.push('/data-leaks');
     },
     [],
   );
@@ -70,9 +66,9 @@ export const LoginForm = ({}: LoginFormProps) => {
               justify="flex-start"
               alignItems="flex-start"
             >
-              <Grid item xs={12}>
+              <Grid item xs={4}>
                 <InputField
-                  type="text"
+                  type="email"
                   name="email"
                   label="Email"
                   value={values.email}
@@ -83,22 +79,10 @@ export const LoginForm = ({}: LoginFormProps) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputField
-                  type="password"
-                  name="password"
-                  label="Password"
-                  value={values.password}
-                  error={errors.password}
-                  touch={touched.password}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <Grid
                   container
-                  justify="flex-end"
-                  alignItems="flex-end"
+                  justify="flex-start"
+                  alignItems="flex-start"
                   spacing={1}
                 >
                   <SubmitButtons
@@ -116,6 +100,8 @@ export const LoginForm = ({}: LoginFormProps) => {
   );
 };
 
-export interface LoginFormProps {}
+export interface SearchByDomainProps {
+  setSearchTerm: any;
+}
 
-export default LoginForm;
+export default SearchByDomain;

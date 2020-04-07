@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { Formik, FormikProps, FormikHelpers, Form } from 'formik';
-import { useRouter } from 'next/router';
 
 // Components
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 
@@ -11,18 +11,16 @@ import SubmitButtons from 'components/SubmitButtons';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
-const FORM_NAME = 'LoginForm';
+const FORM_NAME = 'SearchByDomain';
 
-export const LoginForm = ({}: LoginFormProps) => {
+export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
   const classes = useStyles();
-  const router = useRouter();
 
   /**
    * Initial Values
    */
   const initialValues: FormValues = {
-    email: '',
-    password: '',
+    domain: '',
   };
 
   /**
@@ -32,10 +30,9 @@ export const LoginForm = ({}: LoginFormProps) => {
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
       console.log(FORM_NAME, values);
 
+      setSearchTerm(values.domain);
       setSubmitting(false);
       resetForm();
-
-      router.push('/data-leaks');
     },
     [],
   );
@@ -70,26 +67,14 @@ export const LoginForm = ({}: LoginFormProps) => {
               justify="flex-start"
               alignItems="flex-start"
             >
-              <Grid item xs={12}>
+              <Grid item xs={4}>
                 <InputField
                   type="text"
-                  name="email"
-                  label="Email"
-                  value={values.email}
-                  error={errors.email}
-                  touch={touched.email}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  type="password"
-                  name="password"
-                  label="Password"
-                  value={values.password}
-                  error={errors.password}
-                  touch={touched.password}
+                  name="domain"
+                  label="Domain"
+                  value={values.domain}
+                  error={errors.domain}
+                  touch={touched.domain}
                   handleBlur={handleBlur}
                   handleChange={handleChange}
                 />
@@ -97,8 +82,8 @@ export const LoginForm = ({}: LoginFormProps) => {
               <Grid item xs={12}>
                 <Grid
                   container
-                  justify="flex-end"
-                  alignItems="flex-end"
+                  justify="flex-start"
+                  alignItems="flex-start"
                   spacing={1}
                 >
                   <SubmitButtons
@@ -116,6 +101,8 @@ export const LoginForm = ({}: LoginFormProps) => {
   );
 };
 
-export interface LoginFormProps {}
+export interface SearchByDomainProps {
+  setSearchTerm: any;
+}
 
-export default LoginForm;
+export default SearchByDomain;
