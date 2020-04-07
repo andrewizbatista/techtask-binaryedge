@@ -3,17 +3,21 @@ import { Formik, FormikProps, FormikHelpers, Form } from 'formik';
 
 // Components
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 
-// Utils
+// Others
+import { fetcherWithToken } from 'src/api';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
 const FORM_NAME = 'SearchByDomain';
 
-export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
+export const SearchByDomain = ({
+  setSearchTerm,
+  setDataLeaks,
+  setIsLoading,
+}: SearchByDomainProps) => {
   const classes = useStyles();
 
   /**
@@ -28,9 +32,22 @@ export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
    */
   const handleSubmit = useCallback(
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
-      console.log(FORM_NAME, values);
+      setIsLoading(true);
 
-      setSearchTerm(values.domain);
+      fetcherWithToken(
+        'GET',
+        `/api/v1/domain/dataleaks?domain=${values.domain}`,
+      )
+        .then((data: any) => {
+          setSearchTerm(values.domain);
+          setDataLeaks(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log({ err });
+          setIsLoading(false);
+        });
+
       setSubmitting(false);
       resetForm();
     },
@@ -67,7 +84,7 @@ export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
               justify="flex-start"
               alignItems="flex-start"
             >
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <InputField
                   type="text"
                   name="domain"
@@ -103,6 +120,8 @@ export const SearchByDomain = ({ setSearchTerm }: SearchByDomainProps) => {
 
 export interface SearchByDomainProps {
   setSearchTerm: any;
+  setDataLeaks: any;
+  setIsLoading: any;
 }
 
 export default SearchByDomain;

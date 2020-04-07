@@ -8,6 +8,7 @@ import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 
 // Utils
+import { fetcher } from 'src/api';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
@@ -32,10 +33,17 @@ export const LoginForm = ({}: LoginFormProps) => {
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
       console.log(FORM_NAME, values);
 
+      fetcher('POST', '/api/auth/login/', values)
+        .then((data: any) => {
+          localStorage.setItem('authToken', data.token);
+          router.push('/data-leaks');
+        })
+        .catch((err) => {
+          console.log({ err });
+        });
+
       setSubmitting(false);
       resetForm();
-
-      router.push('/data-leaks');
     },
     [],
   );

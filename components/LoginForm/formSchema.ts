@@ -7,7 +7,7 @@ export const formValuesSchema = yup.object().shape({
     .required('You must provide an email.'),
   password: yup
     .string()
-    .min(6, 'Your password needs to have at least 6 characters.')
+    .min(4, 'Your password needs to have at least 4 characters.')
     .required('You must provide a password.'),
 });
 

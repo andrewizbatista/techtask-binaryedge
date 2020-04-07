@@ -11,25 +11,19 @@ import SearchByDomain from 'components/SearchByDomain';
 import SearchByEmail from 'components/SearchByEmail';
 // Others
 import useGlobalStyles from 'src/styles';
-import searchByDomain from 'src/mocks/searchByDomain';
 
 export const DataLeaksPage = ({ pageMeta }: DataLeaksPageProps) => {
   const globalClasses = useGlobalStyles();
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [dataLeaks, setDataLeaks] = useState<DataLeaks>([]);
 
   const handleTabChange = (e: ChangeEvent<{}>, value: number) => {
     setSearchTerm('');
     setActiveTab(value);
   };
-
-  useEffect(() => {
-    setDataLeaks(searchByDomain);
-
-    return () => setDataLeaks([]);
-  }, []);
 
   const searchPhrase = `${activeTab === 0 ? 'Domain' : 'Email'}: ${searchTerm}`;
 
@@ -38,16 +32,28 @@ export const DataLeaksPage = ({ pageMeta }: DataLeaksPageProps) => {
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
-        indicatorColor="primary"
-        textColor="primary"
-        className={globalClasses.spacing4}
+        indicatorColor="secondary"
+        textColor="secondary"
+        className={globalClasses.spacing2}
       >
         <Tab label="Search By Domain" />
         <Tab label="Search By Email" />
       </Tabs>
       <div className={globalClasses.spacing6}>
-        {activeTab === 0 && <SearchByDomain setSearchTerm={setSearchTerm} />}
-        {activeTab === 1 && <SearchByEmail setSearchTerm={setSearchTerm} />}
+        {activeTab === 0 && (
+          <SearchByDomain
+            setIsLoading={setIsLoading}
+            setSearchTerm={setSearchTerm}
+            setDataLeaks={setDataLeaks}
+          />
+        )}
+        {activeTab === 1 && (
+          <SearchByEmail
+            setIsLoading={setIsLoading}
+            setSearchTerm={setSearchTerm}
+            setDataLeaks={setDataLeaks}
+          />
+        )}
       </div>
       <div className={globalClasses.spacing2}>
         <Typography variant="h2" color="secondary">

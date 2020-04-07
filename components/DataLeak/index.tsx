@@ -6,18 +6,14 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Chip from '@material-ui/core/Chip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
+import DataLeakEmails from 'components/DataLeakEmails';
 
 // Icons
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import BugReportOutlinedIcon from '@material-ui/icons/BugReportOutlined';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 
 // Others
 import useStyles from './styles';
@@ -60,7 +56,6 @@ export const DataLeak = ({ dataLeak }: DataLeakProps) => {
           variant="subtitle2"
           color={seen ? 'secondary' : 'primary'}
           className={classes.dataLeakName}
-          // style={{ fontWeight: seen ? 'bold' : 'normal' }}
         >
           {dataLeak.name}
         </Typography>
@@ -74,29 +69,7 @@ export const DataLeak = ({ dataLeak }: DataLeakProps) => {
         />
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
-        <div className={classes.scrollableArea}>
-          <List dense>
-            {dataLeak.emails &&
-              dataLeak.emails.map((entry) => {
-                const domain = entry.email.split('@')[1];
-
-                return (
-                  <ListItem>
-                    <ListItemIcon>
-                      <AlternateEmailIcon
-                        color={seen ? 'secondary' : 'primary'}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      color={seen ? 'secondary' : 'primary'}
-                      primary={entry.email}
-                      secondary={domain}
-                    />
-                  </ListItem>
-                );
-              })}
-          </List>
-        </div>
+        <DataLeakEmails emails={dataLeak?.emails || []} seen={seen} />
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

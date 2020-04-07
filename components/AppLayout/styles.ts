@@ -5,14 +5,21 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 
-const styles = makeStyles(({}: Theme) =>
+const styles = makeStyles(({ palette, spacing }: Theme) =>
   createStyles({
-    appbar: {
-      height: '10vh',
-      backgroundColor: 'green',
+    header: {
+      borderBottom: `5px solid ${palette.primary.main}`,
+      backgroundColor: palette.primary.main,
+      backgroundImage: 'url("img/splash-screen.jpg")',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      marginBottom: spacing(4),
+      '& img': {
+        height: '80px',
+      },
     },
-    content: {
-      height: '90vh',
+    logout: {
+      float: 'right',
     },
   }),
 );
