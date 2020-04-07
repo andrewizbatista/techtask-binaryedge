@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.6",
     "@types/core-js": "^2.5.3",
     "@types/faker": "^4.1.11",
@@ -30,9 +31,11 @@
     "@types/node": "^13.9.8",
     "@types/react": "^16.9.31",
     "@types/react-dom": "^16.9.6",
+    "@types/yup": "^0.26.34",
     "clsx": "^1.1.0",
     "core-js": "^3.6.4",
     "faker": "^4.1.0",
+    "formik": "^2.1.4",
     "moment": "^2.24.0",
     "next": "^9.3.4",
     "plop": "^2.6.0",
@@ -41,7 +44,8 @@
     "swr": "^0.2.0",
     "typescript": "^3.8.3",
     "uuid": "^7.0.3",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.0.0",
+    "yup": "^0.28.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
