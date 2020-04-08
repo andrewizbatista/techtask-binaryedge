@@ -14,7 +14,7 @@ This app consists of an authenticated portal that lets you check for data leaks 
 
 - The whole project was built on top of my own [nextjs-boilerplate](https://github.com/andrewizbatista/nextjs-boilerplate).
 - The tables that show the data leaks are virtualized (using [react-window](https://github.com/bvaughn/react-window)) to accommodate big amounts of data without affecting the overall performance.
-- The app stores your token locally (nothing fancy, on `localStorage`) so that your session is maintained (it will never expire).
+- The app stores your token locally (nothing fancy, on `localStorage`) so that your session is maintained - it will never expire.
 - If you try to access a url that does not exist, the app will redirect you to the `/login` or `/data-leaks` (depending on if you have or not a token stored).
 - The project does not use `Redux`, the fetching of data and management of state is done by a React hook `useFetch` (created by me), which uses `useReducer` internally.
 - The color palette and typography were chosen based on the BinaryEdge brand.
