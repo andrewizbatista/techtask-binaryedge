@@ -4,13 +4,13 @@ Created by me ([@andrewizbatista](https://github.com/andrewizbatista)) and built
 
 This app consists of an authenticated portal that lets you check for data leaks on a specified domain or email address.
 
-##### Technologies
+#### Technologies
 
 - [TypeScript](https://www.typescriptlang.org/) - JavaScript Superset
 - [Next.js](https://nextjs.org/) - Web Framework
 - [Material UI](https://material-ui.com/) - UI Framework
 
-##### Considerations
+#### Considerations
 
 - The whole project was built on top of my own [nextjs-boilerplate](https://github.com/andrewizbatista/nextjs-boilerplate).
 - The tables that show the data leaks are virtualized (using [react-window](https://github.com/bvaughn/react-window)) to accommodate big amounts of data without affecting the overall performance.
