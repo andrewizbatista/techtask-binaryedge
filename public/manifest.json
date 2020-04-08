@@ -1,14 +1,14 @@
 {
-  "name": "nextjs-boilerplate",
+  "name": "techtask-binaryedge",
   "short_name": "",
   "description": "",
   "lang": "en",
   "dir": "ltr",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#8e3545",
+  "theme_color": "#e64d36",
   "orientation": "portrait-primary",
-  "background_color": "#333333",
+  "background_color": "#1e1e1e",
   "icons": [
     {
       "src": "meta/icon-36x36.png",

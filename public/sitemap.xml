@@ -6,4 +6,12 @@
     <loc>https://domain.com</loc>
   </url>
 
+  <url>
+    <loc>https://domain.com/login</loc>
+  </url>
+
+  <url>
+    <loc>https://domain.com/data-leaks</loc>
+  </url>
+
 </urlset>
