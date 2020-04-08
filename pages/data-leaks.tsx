@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { GetStaticProps } from 'next';
 
 // Components
@@ -9,23 +9,38 @@ import AppLayout from 'components/AppLayout';
 import DataLeak from 'components/DataLeak';
 import SearchByDomain from 'components/SearchByDomain';
 import SearchByEmail from 'components/SearchByEmail';
+import Loading from 'components/Loading';
+
 // Others
+import useFetch from 'src/hooks/useFetch';
 import useGlobalStyles from 'src/styles';
 
 export const DataLeaksPage = ({ pageMeta }: DataLeaksPageProps) => {
   const globalClasses = useGlobalStyles();
 
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [dataLeaks, setDataLeaks] = useState<DataLeaks>([]);
+  const [searchTermDomain, setSearchTermDomain] = useState<string>('');
+  const [searchTermEmail, setSearchTermEmail] = useState<string>('');
+
+  const domainDataLeaks = useFetch({
+    method: 'GET',
+    endpoint: '/api/v1/domain/dataleaks',
+  });
+
+  const emailDataLeaks = useFetch({
+    method: 'GET',
+    endpoint: '/api/v1/email/dataleaks',
+  });
 
   const handleTabChange = (e: ChangeEvent<{}>, value: number) => {
-    setSearchTerm('');
     setActiveTab(value);
   };
 
-  const searchPhrase = `${activeTab === 0 ? 'Domain' : 'Email'}: ${searchTerm}`;
+  const loadingProps = !activeTab ? domainDataLeaks : emailDataLeaks;
+  const searchTerm = !activeTab ? searchTermDomain : searchTermEmail;
+  const dataLeaks = !activeTab
+    ? domainDataLeaks.state.data
+    : emailDataLeaks.state.data;
 
   return (
     <AppLayout pageMeta={pageMeta}>
@@ -42,32 +57,36 @@ export const DataLeaksPage = ({ pageMeta }: DataLeaksPageProps) => {
       <div className={globalClasses.spacing6}>
         {activeTab === 0 && (
           <SearchByDomain
-            setIsLoading={setIsLoading}
-            setSearchTerm={setSearchTerm}
-            setDataLeaks={setDataLeaks}
+            useFetchCall={domainDataLeaks}
+            setSearchTerm={setSearchTermDomain}
           />
         )}
         {activeTab === 1 && (
           <SearchByEmail
-            setIsLoading={setIsLoading}
-            setSearchTerm={setSearchTerm}
-            setDataLeaks={setDataLeaks}
+            useFetchCall={emailDataLeaks}
+            setSearchTerm={setSearchTermEmail}
           />
         )}
       </div>
-      <div className={globalClasses.spacing2}>
-        <Typography variant="h2" color="secondary">
-          Data Leaks
-        </Typography>
-        {searchTerm && (
-          <Typography variant="h3" color="textSecondary">
-            {searchPhrase}
-          </Typography>
+      <Loading {...loadingProps}>
+        {dataLeaks && (
+          <>
+            <div className={globalClasses.spacing2}>
+              <Typography variant="h2" color="secondary">
+                Data Leaks
+              </Typography>
+              {searchTerm && (
+                <Typography variant="h3" color="textSecondary">
+                  {`Search results for: ${searchTerm}`}
+                </Typography>
+              )}
+            </div>
+            {dataLeaks.map((dataLeak: DataLeak) => (
+              <DataLeak key={dataLeak.name} dataLeak={dataLeak} />
+            ))}
+          </>
         )}
-      </div>
-      {dataLeaks.map((dataLeak: DataLeak) => (
-        <DataLeak key={dataLeak.name} dataLeak={dataLeak} />
-      ))}
+      </Loading>
     </AppLayout>
   );
 };
@@ -76,7 +95,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       pageMeta: {
-        metaTitle: 'Data Leaks',
+        metaTitle: 'BinaryEdge Tech Task by @andrewizbatista',
         metaDescription: 'BinaryEdge Tech Task by @andrewizbatista',
       },
     },

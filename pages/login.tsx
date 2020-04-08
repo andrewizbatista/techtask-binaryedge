@@ -4,6 +4,7 @@ import { styled } from '@material-ui/core/styles';
 
 // Components
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import LoginForm from 'components/LoginForm';
@@ -11,7 +12,7 @@ import DynamicMetaTags from 'components/MetaTags/Dynamic';
 
 // Others
 import useGlobalStyles from 'src/styles';
-import { theme } from 'src/theme';
+import { mediaQueries } from 'src/theme';
 
 export const LoginPage = ({ pageMeta }: LoginPageProps) => {
   const globalClasses = useGlobalStyles();
@@ -20,14 +21,16 @@ export const LoginPage = ({ pageMeta }: LoginPageProps) => {
     <>
       <DynamicMetaTags pageMeta={pageMeta} />
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={5}>
           <Wrapper>
             <Header>
-              <img
-                src="https://www.binaryedge.io/img/logo.png"
-                title="BinaryEdge"
-                alt="BinaryEdge"
-              />
+              <div className={globalClasses.spacing2}>
+                <img
+                  src="https://www.binaryedge.io/img/logo.png"
+                  title="BinaryEdge"
+                  alt="BinaryEdge"
+                />
+              </div>
               <Typography variant="h1" color="secondary">
                 Tech Task
               </Typography>
@@ -46,13 +49,9 @@ export const LoginPage = ({ pageMeta }: LoginPageProps) => {
             <LoginForm />
           </Wrapper>
         </Grid>
-        <Grid item xs={8} className={globalClasses.loginImage}>
-          {/* <Credits>
-            <Typography variant="body1" color="primary">
-              Grant McCurdy
-            </Typography>
-          </Credits> */}
-        </Grid>
+        <Hidden xsDown>
+          <Grid item xs={7} className={globalClasses.loginImage} />
+        </Hidden>
       </Grid>
     </>
   );
@@ -62,7 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       pageMeta: {
-        metaTitle: 'Login',
+        metaTitle: 'BinaryEdge Tech Task by @andrewizbatista',
         metaDescription: 'BinaryEdge Tech Task by @andrewizbatista',
       },
     },
@@ -76,19 +75,18 @@ export interface LoginPageProps {
 export default LoginPage;
 
 const Wrapper = styled('div')({
-  paddingLeft: '2rem',
-  paddingRight: '2rem',
+  paddingLeft: '4rem',
+  paddingRight: '4rem',
   '& img': {
-    height: '50px',
+    height: '100px',
+  },
+  [mediaQueries.tablet]: {
+    paddingTop: '4rem',
+    paddingLeft: '2rem',
+    paddingRight: '2rem',
   },
 });
 
 const Header = styled('div')({
   paddingBottom: '2rem',
-});
-
-const Credits = styled('div')({
-  padding: '1rem',
-  backgroundColor: theme.palette.secondary.main,
-  opacity: 0.5,
 });

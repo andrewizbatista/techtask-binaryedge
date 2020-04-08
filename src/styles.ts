@@ -15,6 +15,17 @@ const styles = makeStyles(({ palette, spacing }: Theme) =>
       backgroundPosition: 'center',
       backgroundSize: 'cover',
     },
+    indexWrapper: {
+      width: '100%',
+      height: '100vh',
+      textAlign: 'center',
+      backgroundColor: '#e7e7e7',
+      paddingTop: '25vh',
+      '& img': {
+        height: '200px',
+        marginBottom: '1rem',
+      },
+    },
     spacing2: {
       marginBottom: spacing(2),
     },

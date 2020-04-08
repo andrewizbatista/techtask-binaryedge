@@ -32,10 +32,8 @@ export const AppLayout = ({ pageMeta, children }: AppLayoutProps) => {
                 title="BinaryEdge"
                 alt="BinaryEdge"
               />
-              <Typography variant="h1" color="secondary">
-                Tech Task
-              </Typography>
-              <Typography variant="body1" color="secondary">
+              <Typography variant="h1">Tech Task</Typography>
+              <Typography variant="body1">
                 Created by{' '}
                 <Link
                   href="https://github.com/andrewizbatista"
@@ -46,9 +44,9 @@ export const AppLayout = ({ pageMeta, children }: AppLayoutProps) => {
                   @andrewizbatista
                 </Link>
                 <Button
-                  color="secondary"
                   className={classes.logout}
                   onClick={logout}
+                  color="primary"
                 >
                   Logout
                 </Button>

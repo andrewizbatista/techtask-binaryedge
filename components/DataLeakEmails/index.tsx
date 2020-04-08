@@ -16,7 +16,7 @@ export const DataLeakEmails = ({ emails, seen }: DataLeakEmailsProps) => {
         itemCount={emails?.length || 0}
         itemSize={50}
         width="100%"
-        height={400}
+        height={200}
       >
         {(props) => <EmailItem seen={seen} {...props} />}
       </FixedSizeList>

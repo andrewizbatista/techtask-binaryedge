@@ -7,47 +7,26 @@ import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 
 // Others
-import { fetcherWithToken } from 'src/api';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
 const FORM_NAME = 'SearchByDomain';
 
 export const SearchByDomain = ({
+  useFetchCall,
   setSearchTerm,
-  setDataLeaks,
-  setIsLoading,
 }: SearchByDomainProps) => {
   const classes = useStyles();
 
-  /**
-   * Initial Values
-   */
   const initialValues: FormValues = {
     domain: '',
   };
 
-  /**
-   * Submit
-   */
   const handleSubmit = useCallback(
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
-      setIsLoading(true);
+      useFetchCall.submit({}, { domain: values.domain });
 
-      fetcherWithToken(
-        'GET',
-        `/api/v1/domain/dataleaks?domain=${values.domain}`,
-      )
-        .then((data: any) => {
-          setSearchTerm(values.domain);
-          setDataLeaks(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log({ err });
-          setIsLoading(false);
-        });
-
+      setSearchTerm(values.domain);
       setSubmitting(false);
       resetForm();
     },
@@ -119,9 +98,8 @@ export const SearchByDomain = ({
 };
 
 export interface SearchByDomainProps {
+  useFetchCall: any;
   setSearchTerm: any;
-  setDataLeaks: any;
-  setIsLoading: any;
 }
 
 export default SearchByDomain;

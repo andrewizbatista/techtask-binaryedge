@@ -1,4 +1,10 @@
-import React, { useState, useCallback, MouseEvent, FocusEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  MouseEvent,
+  FocusEvent,
+} from 'react';
 
 // Components
 import Typography from '@material-ui/core/Typography';
@@ -35,6 +41,10 @@ export const DataLeak = ({ dataLeak }: DataLeakProps) => {
     onClick: (e: MouseEvent) => markSeen(e),
     onFocus: (e: FocusEvent) => e.stopPropagation(),
   };
+
+  useEffect(() => {
+    setSeen(false);
+  }, []);
 
   return (
     <ExpansionPanel>

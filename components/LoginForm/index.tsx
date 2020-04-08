@@ -8,7 +8,7 @@ import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 import Loading from 'components/Loading';
 
-// Utils
+// Others
 import useFetch from 'src/hooks/useFetch';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
@@ -68,7 +68,7 @@ export const LoginForm = ({}: LoginFormProps) => {
         const canReset = dirty && !isSubmitting && !isValidating;
 
         return (
-          <Loading {...authLogin.state} reset={authLogin.reset}>
+          <Loading {...authLogin}>
             <Form
               id={`${FORM_NAME}-Form`}
               noValidate

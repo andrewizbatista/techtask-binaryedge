@@ -18,6 +18,13 @@ export const colors: {
   Error: '#e64d36',
 };
 
+export const mediaQueries: MediaQueries = {
+  mobile: '@media (max-width: 425px)',
+  tablet: '@media (max-width: 1024px)',
+  laptop: '@media (max-width: 1440px)',
+  desktop: '@media (min-width: 1441px)',
+};
+
 export const theme = createMuiTheme({
   palette: {
     type: 'light',
@@ -65,3 +72,10 @@ export const theme = createMuiTheme({
   overrides: {},
   props: {},
 });
+
+interface MediaQueries {
+  readonly mobile: string;
+  readonly tablet: string;
+  readonly laptop: string;
+  readonly desktop: string;
+}

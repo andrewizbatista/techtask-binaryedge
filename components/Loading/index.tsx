@@ -10,9 +10,7 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import useStyles from './styles';
 
 export const Loading = ({
-  isLoading,
-  hasError,
-  errorMessage,
+  state: { isLoading, hasError, errorMessage },
   reset,
   children,
 }: LoadingProps) => {
@@ -45,7 +43,7 @@ export const Loading = ({
       <div className={classes.wrapper}>
         <LoopIcon color="secondary" className={classes.loading} />
         <Typography color="secondary" variant="body2">
-          Loading...
+          Loading
         </Typography>
       </div>
     );
@@ -55,11 +53,13 @@ export const Loading = ({
 };
 
 export interface LoadingProps {
-  isLoading: boolean;
-  hasError: boolean;
+  state: {
+    isLoading: boolean;
+    hasError: boolean;
+    errorMessage?: string;
+  };
   reset: () => any;
-  errorMessage?: string;
-  children: any;
+  children?: any;
 }
 
 export default Loading;

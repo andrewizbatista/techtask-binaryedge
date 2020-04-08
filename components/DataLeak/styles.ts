@@ -22,10 +22,6 @@ const styles = makeStyles(({}: Theme) =>
     expansionDetails: {
       display: 'block',
     },
-    scrollableArea: {
-      height: '400px',
-      overflowY: 'scroll',
-    },
   }),
 );
 

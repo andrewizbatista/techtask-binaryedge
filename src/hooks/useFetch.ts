@@ -5,6 +5,7 @@ const STARTED = 'STARTED';
 const SUCCEEDED = 'SUCCEEDED';
 const FAILED = 'FAILED';
 const RESET = 'RESET';
+const UPDATE_CACHE = 'UPDATE_CACHE';
 
 export const initialState: UseQueryState<any, any> = {
   isLoading: false,
@@ -47,6 +48,11 @@ export const reducer = (
         errorMessage: action.payload,
         data: null,
       };
+    case UPDATE_CACHE:
+      return {
+        ...state,
+        data: action.payload,
+      };
     case RESET:
       return initialState;
     default:
@@ -73,17 +79,25 @@ export default <Request = any, Response = any>({
       resolve(data);
     });
 
-  const handleSubmit = (params = {}) => {
+  const handleSubmit = (params = {}, querystring?: any) => {
     dispatch({ type: STARTED, payload: params });
+
+    let url = endpoint;
+    if (querystring) {
+      const qs = Object.keys(querystring)
+        .map((key) => `${key}=${querystring[key]}`)
+        .join('&');
+      url = `${endpoint}?${qs}`;
+    }
 
     try {
       if (noAuth) {
-        return fetcher(method, endpoint, params)
+        return fetcher(method, url, params)
           .then(handleApiReturn)
           .catch(handleError);
       }
 
-      return fetcherWithToken(method, endpoint, params)
+      return fetcherWithToken(method, url, params)
         .then(handleApiReturn)
         .catch(handleError);
     } catch (e) {
@@ -95,13 +109,16 @@ export default <Request = any, Response = any>({
     state,
     submit: handleSubmit,
     reset: () => dispatch({ type: RESET }),
+    updateCache: (changeFunction) =>
+      dispatch({ type: UPDATE_CACHE, payload: changeFunction(state.data) }),
   };
 };
 
 interface ReturnShape<Request, Response> {
   state: UseQueryState<Request, Response>;
-  submit: (request?: Request) => Promise<any>;
+  submit: (request?: Request, querystring?: any) => Promise<any>;
   reset: () => void;
+  updateCache: (changeFunction: (data: Response) => Response) => void;
 }
 
 export interface UseQueryState<Request, Response> {

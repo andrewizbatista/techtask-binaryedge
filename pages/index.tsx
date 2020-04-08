@@ -1,29 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
 // Components
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import DynamicMetaTags from 'components/MetaTags/Dynamic';
 
-// Others404 Not Found
+// Others
 import useGlobalStyles from 'src/styles';
 
-const ErrorPage = ({ pageMeta }: ErrorPageProps) => {
+export const IndexPage = ({ pageMeta }: IndexPageProps) => {
   const globalClasses = useGlobalStyles();
   const router = useRouter();
-
-  const [redirectTo, setRedirectTo] = useState<string | null>(null);
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
 
-    const route = authToken ? '/data-leaks' : '/login';
-
-    setRedirectTo(route);
-    setTimeout(() => {
-      router.push(route);
-    }, 2000);
+    if (authToken) {
+      router.push('/data-leaks');
+    } else {
+      router.push('/login');
+    }
   }, []);
 
   return (
@@ -34,16 +32,20 @@ const ErrorPage = ({ pageMeta }: ErrorPageProps) => {
         title="BinaryEdge"
         alt="BinaryEdge"
       />
-      <div className={globalClasses.spacing2}>
-        <Typography variant="h2" color="primary">
-          404 Not Found
-        </Typography>
-      </div>
-      {redirectTo && (
-        <Typography variant="h3" color="secondary">
-          Redirecting you to <code>{redirectTo}</code>
-        </Typography>
-      )}
+      <Typography variant="h1" color="secondary">
+        Tech Task
+      </Typography>
+      <Typography variant="body1" color="secondary">
+        Created by{' '}
+        <Link
+          href="https://github.com/andrewizbatista"
+          title="@andrewizbatista on GitHub"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @andrewizbatista
+        </Link>
+      </Typography>
     </div>
   );
 };
@@ -52,15 +54,15 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       pageMeta: {
-        metaTitle: '404 Not Found',
+        metaTitle: 'BinaryEdge Tech Task by @andrewizbatista',
         metaDescription: 'BinaryEdge Tech Task by @andrewizbatista',
       },
     },
   };
 };
 
-export interface ErrorPageProps {
+export interface IndexPageProps {
   pageMeta: PageMeta;
 }
 
-export default ErrorPage;
+export default IndexPage;

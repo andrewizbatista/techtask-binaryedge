@@ -7,48 +7,37 @@ import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
 
 // Others
-import { fetcherWithToken } from 'src/api';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
 const FORM_NAME = 'SearchByEmail';
 
 export const SearchByEmail = ({
+  useFetchCall,
   setSearchTerm,
-  setDataLeaks,
-  setIsLoading,
 }: SearchByEmailProps) => {
   const classes = useStyles();
 
-  /**
-   * Initial Values
-   */
   const initialValues: FormValues = {
     email: '',
   };
 
-  /**
-   * Submit
-   */
   const handleSubmit = useCallback(
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
-      setIsLoading(true);
-
-      fetcherWithToken('GET', `/api/v1/email/dataleaks?email=${values.email}`)
-        .then((data: any) => {
+      useFetchCall.submit({}, { email: values.email }).then((data: any) => {
+        if (data) {
           const mutatedData = [...data];
 
           for (let i = 0, ii = mutatedData.length; i < ii; i++) {
             mutatedData[i].emails = [{ email: values.email }];
           }
 
+          useFetchCall.updateCache(() => {
+            return mutatedData;
+          });
           setSearchTerm(values.email);
-          setDataLeaks(mutatedData);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-        });
+        }
+      });
 
       setSubmitting(false);
       resetForm();
@@ -121,9 +110,8 @@ export const SearchByEmail = ({
 };
 
 export interface SearchByEmailProps {
+  useFetchCall: any;
   setSearchTerm: any;
-  setDataLeaks: any;
-  setIsLoading: any;
 }
 
 export default SearchByEmail;
