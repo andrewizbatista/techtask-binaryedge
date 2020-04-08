@@ -1,4 +1,4 @@
-# Next.js Boilerplate
+# Tech Task: [BinaryEdge](https://www.binaryedge.io/)
 
 Created by [andrewizbatista](https://github.com/andrewizbatista)
 
