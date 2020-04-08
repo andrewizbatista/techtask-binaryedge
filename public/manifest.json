@@ -1,7 +1,7 @@
 {
-  "name": "techtask-binaryedge",
-  "short_name": "",
-  "description": "",
+  "name": "Tech Task: BinaryEdge",
+  "short_name": "techtask-binaryedge",
+  "description": "BinaryEdge Tech Task by @andrewizbatista",
   "lang": "en",
   "dir": "ltr",
   "start_url": ".",
