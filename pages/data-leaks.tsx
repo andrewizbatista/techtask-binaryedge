@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 
 // Components
 import Tabs from '@material-ui/core/Tabs';
@@ -17,10 +18,19 @@ import useGlobalStyles from 'src/styles';
 
 export const DataLeaksPage = ({ pageMeta }: DataLeaksPageProps) => {
   const globalClasses = useGlobalStyles();
+  const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const [searchTermDomain, setSearchTermDomain] = useState<string>('');
   const [searchTermEmail, setSearchTermEmail] = useState<string>('');
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+      router.push('/login');
+    }
+  }, []);
 
   const domainDataLeaks = useFetch({
     method: 'GET',
