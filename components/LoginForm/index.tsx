@@ -6,9 +6,10 @@ import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import InputField from 'components/InputField';
 import SubmitButtons from 'components/SubmitButtons';
+import Loading from 'components/Loading';
 
 // Utils
-import { fetcher } from 'src/api';
+import useFetch from 'src/hooks/useFetch';
 import { formValuesSchema, FormValues } from './formSchema';
 import useStyles from './styles';
 
@@ -18,29 +19,25 @@ export const LoginForm = ({}: LoginFormProps) => {
   const classes = useStyles();
   const router = useRouter();
 
-  /**
-   * Initial Values
-   */
+  const authLogin = useFetch({
+    method: 'POST',
+    endpoint: '/api/auth/login/',
+    noAuth: true,
+  });
+
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
 
-  /**
-   * Submit
-   */
   const handleSubmit = useCallback(
     (values, { setSubmitting, resetForm }: FormikHelpers<FormValues>) => {
-      console.log(FORM_NAME, values);
-
-      fetcher('POST', '/api/auth/login/', values)
-        .then((data: any) => {
+      authLogin.submit(values).then((data) => {
+        if (data) {
           localStorage.setItem('authToken', data.token);
           router.push('/data-leaks');
-        })
-        .catch((err) => {
-          console.log({ err });
-        });
+        }
+      });
 
       setSubmitting(false);
       resetForm();
@@ -71,53 +68,59 @@ export const LoginForm = ({}: LoginFormProps) => {
         const canReset = dirty && !isSubmitting && !isValidating;
 
         return (
-          <Form id={`${FORM_NAME}-Form`} noValidate className={classes.wrapper}>
-            <Grid
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
+          <Loading {...authLogin.state} reset={authLogin.reset}>
+            <Form
+              id={`${FORM_NAME}-Form`}
+              noValidate
+              className={classes.wrapper}
             >
-              <Grid item xs={12}>
-                <InputField
-                  type="text"
-                  name="email"
-                  label="Email"
-                  value={values.email}
-                  error={errors.email}
-                  touch={touched.email}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField
-                  type="password"
-                  name="password"
-                  label="Password"
-                  value={values.password}
-                  error={errors.password}
-                  touch={touched.password}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid
-                  container
-                  justify="flex-end"
-                  alignItems="flex-end"
-                  spacing={1}
-                >
-                  <SubmitButtons
-                    canSubmit={canSubmit}
-                    canReset={canReset}
-                    resetForm={resetForm}
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+              >
+                <Grid item xs={12}>
+                  <InputField
+                    type="text"
+                    name="email"
+                    label="Email"
+                    value={values.email}
+                    error={errors.email}
+                    touch={touched.email}
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
                   />
                 </Grid>
+                <Grid item xs={12}>
+                  <InputField
+                    type="password"
+                    name="password"
+                    label="Password"
+                    value={values.password}
+                    error={errors.password}
+                    touch={touched.password}
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    justify="flex-end"
+                    alignItems="flex-end"
+                    spacing={1}
+                  >
+                    <SubmitButtons
+                      canSubmit={canSubmit}
+                      canReset={canReset}
+                      resetForm={resetForm}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-          </Form>
+            </Form>
+          </Loading>
         );
       }}
     </Formik>
