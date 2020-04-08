@@ -75,7 +75,7 @@ export const SearchByEmail = ({
               justify="flex-start"
               alignItems="flex-start"
             >
-              <Grid item xs={6}>
+              <Grid item xs={10} sm={6}>
                 <InputField
                   type="email"
                   name="email"
@@ -87,7 +87,7 @@ export const SearchByEmail = ({
                   handleChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <Grid
                   container
                   justify="flex-start"

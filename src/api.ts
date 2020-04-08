@@ -11,11 +11,9 @@ export const fetcher = (method: Method, endpoint: string, data: {} = {}) =>
       data,
     })
       .then((res) => {
-        console.log({ res });
         resolve(res?.data);
       })
       .catch((err) => {
-        console.error({ err });
         reject(err);
       });
   });
@@ -38,11 +36,9 @@ export const fetcherWithToken = (
       },
     })
       .then((res) => {
-        console.log({ res });
         resolve(res?.data);
       })
       .catch((err) => {
-        console.error({ err });
         reject(err);
       });
   });

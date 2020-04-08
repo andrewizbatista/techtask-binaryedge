@@ -2,8 +2,8 @@ import { colors } from 'src/theme';
 
 const appConfig: AppConfig = {
   appName: 'BinaryEdge Tech Task',
-  appWebsite: 'http://localhost',
-  appThemeColor: colors.Secondary,
+  appWebsite: 'https://techtask-binaryedge.andrewizbatista.now.sh/',
+  appThemeColor: colors.Primary,
   googleFonts: ['Hind:400,700'],
   defaultLocale: {
     code: 'en',

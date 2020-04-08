@@ -26,7 +26,7 @@ export const AppLayout = ({ pageMeta, children }: AppLayoutProps) => {
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={12} className={classes.header}>
           <Grid container direction="row" justify="center" alignItems="center">
-            <Grid item xs={8}>
+            <Grid item xs={12} sm={8}>
               <img
                 src="https://www.binaryedge.io/img/logo.png"
                 title="BinaryEdge"
@@ -54,7 +54,7 @@ export const AppLayout = ({ pageMeta, children }: AppLayoutProps) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={8}>
           {children}
         </Grid>
       </Grid>
