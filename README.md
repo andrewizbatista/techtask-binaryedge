@@ -89,4 +89,4 @@ Then deploy the generated files from the `/out` folder.
 
 ## Authors
 
-- **André Batista** - [andrewizbatista](https://github.com/andrewizbatista)
+- **André Batista** - [@andrewizbatista](https://github.com/andrewizbatista)
