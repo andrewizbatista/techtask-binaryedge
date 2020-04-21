@@ -7,7 +7,8 @@ This app consists of an authenticated portal that lets you check for data leaks 
 #### Technologies
 
 - [TypeScript](https://www.typescriptlang.org/) - JavaScript Superset
-- [Next.js](https://nextjs.org/) - Web Framework
+- [React.js](https://reactjs.org/) - Web Framework
+- [Next.js](https://nextjs.org/) - React Framework
 - [Material UI](https://material-ui.com/) - UI Framework
 
 #### Considerations
